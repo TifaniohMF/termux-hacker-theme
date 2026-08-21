@@ -1,5 +1,4 @@
-[cmd_duration]
-disabled = true
+# ~/.config/starship.toml — Termux Hacker Theme
 
 format = """
 [┌───────────────────](bold green)
@@ -9,7 +8,7 @@ format = """
 
 [directory]
 style = "bold green"
-read_only = " "
+truncation_length = 3
 
 [git_branch]
 symbol = " "
@@ -26,6 +25,10 @@ style = "bold green"
 symbol = " "
 style = "bold green"
 
+[rust]
+symbol = " "
+style = "bold green"
+
 [character]
 success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold white)"
+error_symbol = "[❯](bold white)
