@@ -1,0 +1,31 @@
+[cmd_duration]
+disabled = true
+
+format = """
+[┌───────────────────](bold green)
+[│](bold green)$directory$git_branch$git_status
+[│](bold green)$python$nodejs$rust
+[└─](bold green)$character"""
+
+[directory]
+style = "bold green"
+read_only = " "
+
+[git_branch]
+symbol = " "
+style = "green"
+
+[git_status]
+style = "bold white"
+
+[python]
+symbol = " "
+style = "bold green"
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold white)"
