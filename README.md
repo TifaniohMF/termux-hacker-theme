@@ -1,5 +1,7 @@
 # Termux Hacker Theme
 
+[Read in french](README.fr.md)
+
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 ![Shell](https://img.shields.io/badge/shell-zsh-brightgreen)
 
