@@ -15,7 +15,13 @@ eza bat ripgrep git-delta
 backup_if_exists() {
 	local target="$1"
 	if [ -e "$target" ] || [ -L "$target" ]; then
-		mv "$target" "${target}.bak.$(date +%Y%m%d%H%M%S)"
+		local backup="${target}.bak.$(date +%Y%m%d%H%M%S)"
+		local suffix=1
+		while [ -e "$backup" ] || [ -L "$backup" ]; do
+			backup="${target}.bak.$(date +%Y%m%d%H%M%S)-$suffix"
+			suffix=$((suffix + 1))
+		done
+		mv "$target" "$backup"
 		echo "==> Ancienne configuration sauvegardée : $target"
 	fi
 }

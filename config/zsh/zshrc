@@ -21,7 +21,7 @@ alias grep='rg'
 
 # Effets et bannière
 alias matrix='cmatrix -b -C green'
-fastfetch
+[[ -o interactive ]] && fastfetch
 
 # Prompt
 eval "$(starship init zsh)"
