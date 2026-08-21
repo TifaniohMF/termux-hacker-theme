@@ -1,0 +1,11 @@
+name: ShellCheck
+on: [push, pull_request: ]
+jobs:
+lint:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v4
+- name: Analyse des Script Shell
+run: |
+sudo apt-get update && sudo apt-get install -y shellcheck
+shellcheck install.sh uninstall.sh demo-theme.sh
