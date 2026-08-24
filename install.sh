@@ -7,6 +7,15 @@ command -v pkg >/dev/null || { echo "Ce script doit être exécuté dans Termux.
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="$REPO_DIR/config"
 
+ZSH_CONFIG="$CONFIG/zsh/.zshrc"
+if [ ! -f "$ZSH_CONFIG" ]; then
+	ZSH_CONFIG="$CONFIG/zsh/zshrc"
+fi
+[ -f "$ZSH_CONFIG" ] || {
+	echo "Erreur : configuration Zsh introuvable dans $CONFIG/zsh." >&2
+	exit 1
+}
+
 echo "==> Termux update and install packages"
 pkg update -y && pkg upgrade -y
 pkg install -y git curl wget unzip zsh tmux fastfetch cmatrix \
@@ -22,9 +31,16 @@ backup_if_exists() {
 			suffix=$((suffix + 1))
 		done
 		mv "$target" "$backup"
-		echo "==> Ancienne configuration sauvegardée : $target"
+			echo "==> Ancienne configuration sauvegardée : $backup"
 	fi
 }
+
+	copy_config() {
+		local source="$1"
+		local target="$2"
+		mkdir -p "$(dirname "$target")"
+		cp "$source" "$target"
+	}
 
 backup_if_exists "$HOME/.zshrc"
 backup_if_exists "$HOME/.config/starship.toml"
@@ -32,9 +48,9 @@ backup_if_exists "$HOME/.tmux.conf"
 
 echo "==> Copie de la configuration Termux"
 mkdir -p ~/.termux
-cp "$CONFIG/termux/colors.properties" ~/.termux/
-cp "$CONFIG/termux/termux.properties" ~/.termux/
-cp "$CONFIG/fonts/font.ttf" ~/.termux/
+copy_config "$CONFIG/termux/colors.properties" "$HOME/.termux/colors.properties"
+copy_config "$CONFIG/termux/termux.properties" "$HOME/.termux/termux.properties"
+copy_config "$CONFIG/fonts/font.ttf" "$HOME/.termux/font.ttf"
 termux-reload-settings
 
 echo "==> Installation d'Oh My Zsh (si absent)"
@@ -45,11 +61,11 @@ fi
 echo "==> Installation de Starship"
 curl -sS https://starship.rs/install.sh | sh -s -- -y
 mkdir -p ~/.config
-cp "$CONFIG/starship/starship.toml" ~/.config/
+copy_config "$CONFIG/starship/starship.toml" "$HOME/.config/starship.toml"
 echo "==> Configuration de dircolors, tmux et zsh"
-cp "$CONFIG/dircolors/.dircolors" ~/.dircolors
-cp "$CONFIG/tmux/.tmux.conf" ~/.tmux.conf
-cp "$CONFIG/zsh/zshrc" ~/.zshrc
+copy_config "$CONFIG/dircolors/.dircolors" "$HOME/.dircolors"
+copy_config "$CONFIG/tmux/.tmux.conf" "$HOME/.tmux.conf"
+copy_config "$ZSH_CONFIG" "$HOME/.zshrc"
 
 chsh -s zsh
 
