@@ -45,8 +45,13 @@ bash install.sh
 
 L'installeur met à jour Termux, installe les paquets nécessaires, copie les
 fichiers de configuration, installe Oh My Zsh et Starship si besoin, puis
-configure Zsh comme shell par défaut. Redémarrer Termux ou exécuter `exec zsh`
-à la fin de l'installation.
+configure Zsh comme shell par défaut. Les fichiers existants sont renommés
+avec un suffixe `.bak.<date>` avant toute copie. Redémarrer Termux ou exécuter
+`exec zsh` à la fin de l'installation.
+
+L'installeur accepte les deux noms de configuration Zsh (`config/zsh/.zshrc`
+et l'ancien `config/zsh/zshrc`). Les outils facultatifs sont vérifiés au
+chargement du shell afin qu'une configuration partielle reste utilisable.
 
 ## Commandes utiles
 
